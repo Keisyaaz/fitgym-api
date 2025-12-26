@@ -11,9 +11,9 @@ class CustomerMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check() && Auth::user()->role === 'customer') {
-            return $next($request); // user customer boleh lanjut
+            return $next($request); 
         }
 
-        abort(403, 'Akses ditolak.'); // kalau bukan customer
+        abort(403, 'Akses ditolak.'); 
     }
 }

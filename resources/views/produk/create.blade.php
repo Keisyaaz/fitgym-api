@@ -1,90 +1,117 @@
 @extends('layouts.admin')
 
-@section('title', 'Tambah Produk')
+@section('title', 'Tambah Produk Baru')
 
 @section('content')
+<div class="container-fluid px-4">
+    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="mb-0 text-gray-800 fw-bold">Tambah Produk</h4>
+            <small class="text-muted">Isi formulir di bawah untuk menambahkan item baru.</small>
+        </div>
+        <a href="{{ route('produk.index') }}" class="btn btn-outline-secondary btn-sm">
+            <i class="fas fa-arrow-left me-1"></i> Kembali
+        </a>
+    </div>
 
-<style>
-    form {
-        background: #fff;
-        padding: 30px 40px;
-        border-radius: 10px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        max-width: 400px;
-        margin: 0 auto;
-    }
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    
+                    <form action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        
+                        <div class="row">
+                            <div class="col-md-7 border-end-md pe-md-4">
+                                <h6 class="text-uppercase text-muted fw-bold mb-3" style="font-size: 12px; letter-spacing: 1px;">Informasi Produk</h6>
+                                
+                                <div class="mb-3">
+                                    <label for="Nama_produk" class="form-label fw-medium">Nama Produk <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="Nama_produk" id="Nama_produk" placeholder="Contoh: Whey Protein Gold" required>
+                                </div>
 
-    h2 {
-        text-align: center;
-        color: #333;
-        margin-bottom: 25px;
-    }
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="Kategori_produk" class="form-label fw-medium">Kategori</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-end-0"><i class="fas fa-tag text-muted"></i></span>
+                                            <input type="text" class="form-control border-start-0 ps-0" name="Kategori_produk" id="Kategori_produk" placeholder="Suplemen">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="Varian_produk" class="form-label fw-medium">Varian <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="Varian_produk" id="Varian_produk" placeholder="" required>
+                                    </div>
+                                </div>
 
-    label {
-        font-weight: 500;
-        display: block;
-        margin-bottom: 6px;
-        color: #444;
-    }
+                                <div class="mb-3">
+                                    <label for="Deskripsi_produk" class="form-label fw-medium">Deskripsi</label>
+                                    <textarea class="form-control" name="Deskripsi_produk" id="Deskripsi_produk" rows="5" placeholder="Jelaskan detail produk di sini..."></textarea>
+                                </div>
+                            </div>
 
-    input[type="text"], input[type="number"], textarea, input[type="file"] {
-        width: 100%;
-        padding: 10px 12px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        font-size: 14px;
-        background-color: #fafafa;
-    }
+                            <div class="col-md-5 ps-md-4">
+                                <h6 class="text-uppercase text-muted fw-bold mb-3" style="font-size: 12px; letter-spacing: 1px;">Harga & Media</h6>
 
-    button {
-        width: 100%;
-        padding: 12px;
-        background: #007bff;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background 0.3s ease;
-    }
+                                <div class="mb-4">
+                                    <label for="Harga" class="form-label fw-medium">Harga Satuan <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text fw-bold">Rp</span>
+                                        <input type="number" class="form-control" name="Harga" id="Harga" placeholder="0" required>
+                                    </div>
+                                </div>
 
-    button:hover { background: #42F5F2; }
+                                <div class="mb-3">
+                                    <label class="form-label fw-medium">Upload Gambar</label>
+                                    
+                                    <div class="card bg-light border-dashed mb-2 text-center d-flex justify-content-center align-items-center" style="height: 200px; border: 2px dashed #ccc; overflow: hidden;">
+                                        <img id="img-preview" src="#" alt="Preview" style="display: none; max-width: 100%; max-height: 100%; object-fit: cover;">
+                                        <div id="placeholder-icon" class="text-muted">
+                                            <i class="fas fa-image fa-3x mb-2"></i>
+                                            <p class="small mb-0">Preview Gambar</p>
+                                        </div>
+                                    </div>
 
-    .back {
-        margin-bottom: 15px;
-    }
-</style>
+                                    <input type="file" class="form-control form-control-sm" name="gambar" id="gambar" accept=".png,.jpg,.jpeg" onchange="previewImage()">
+                                    <small class="text-muted" style="font-size: 11px;">Format: JPG, PNG. Maks: 2MB</small>
+                                </div>
+                            </div>
+                        </div>
 
-<h2>Tambah Produk</h2>
+                        <hr class="my-4">
 
-<div class="back">
-    <a href="{{ route('produk.index') }}">← Kembali</a>
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="{{ route('produk.index') }}" class="btn btn-light border">Batal</a>
+                            <button type="submit" class="btn btn-primary px-4 fw-bold">
+                                <i class="fas fa-save me-1"></i> Simpan Produk
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<form action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
-    @csrf
+<script>
+    function previewImage() {
+        const image = document.querySelector('#gambar');
+        const imgPreview = document.querySelector('#img-preview');
+        const placeholder = document.querySelector('#placeholder-icon');
 
-    <label for="Nama_produk">Nama Produk</label>
-    <input type="text" name="Nama_produk" id="Nama_produk" required>
+        imgPreview.style.display = 'block';
+        placeholder.style.display = 'none';
 
-    <label for="Deskripsi_produk">Deskripsi</label>
-    <textarea name="Deskripsi_produk" id="Deskripsi_produk"></textarea>
+        const oFReader = new FileReader();
+        oFReader.readAsDataURL(image.files[0]);
 
-    <label for="Kategori_produk">Kategori</label>
-    <input type="text" name="Kategori_produk" id="Kategori_produk">
-
-    <label for="Varian_produk">Varian</label>
-    <input type="text" name="Varian_produk" id="Varian_produk" required>
-
-    <label for="Harga">Harga</label>
-    <input type="number" name="Harga" id="Harga" required>
-
-    <label for="gambar">Gambar (PNG/JPG)</label>
-    <input type="file" name="gambar" id="gambar" accept=".png,.jpg,.jpeg">
-
-    <button type="submit">Simpan</button>
-</form>
+        oFReader.onload = function(oFREvent) {
+            imgPreview.src = oFREvent.target.result;
+        }
+    }
+</script>
 
 @endsection

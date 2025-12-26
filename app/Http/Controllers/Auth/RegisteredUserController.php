@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered; // <-- pastikan ini ada
+use Illuminate\Auth\Events\Registered; 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -28,7 +28,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // Validasi input
+        
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:users'],
@@ -37,19 +37,24 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        // Buat user baru
-        $user = User::create([
-            'name' => $request->name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'password' => Hash::make($request->password),
-        ]);
+  $user = User::create([
+    'name' => $request->name,
+    'username' => $request->username,
+    'email' => $request->email,
+    'phone' => $request->phone,
+    'password' => Hash::make($request->password),
 
-        // Event Registered (opsional, bisa dipakai untuk listener/email)
+   'role' => str_ends_with($request->email, '@fitgym.com') ? 'admin' : 'customer',
+
+]);
+
+
+
+
+      
         event(new Registered($user));
 
-        // Redirect ke halaman login, tanpa login otomatis
+        
         return redirect()->route('login')->with('success', 'Registrasi berhasil. Silakan login!');
     }
 }

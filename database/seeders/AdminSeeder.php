@@ -16,9 +16,9 @@ class AdminSeeder extends Seeder
             'username' => 'adminfitgym',
             'phone' => '081234567890',
             'address' => 'Jl. FitGym No.1',
-            'password' => Hash::make('password123'), // hashed password
+            'password' => Hash::make('password123'), 
             'role' => 'admin',
-            'status_membership' => 'aktif', // default bisa juga 'nonaktif'
+            'status_membership' => 'aktif', 
         ]);
 
         $this->command->info('Admin user created successfully!');

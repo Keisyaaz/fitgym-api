@@ -8,20 +8,24 @@ use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {
-    // Tampilkan semua produk
+    
     public function index()
     {
         $produk = Produk::all();
         return view('produk.index', compact('produk'));
+		
+		
     }
+	
 
-    // Tampilkan form tambah produk
+
+    
     public function create()
     {
         return view('produk.create');
     }
 
-    // Simpan produk baru
+    
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -50,13 +54,12 @@ class ProdukController extends Controller
         return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan!');
     }
 
-    // Tampilkan form edit produk
+
     public function edit(Produk $produk)
     {
         return view('produk.edit', compact('produk'));
     }
 
-    // Update produk
     public function update(Request $request, Produk $produk)
     {
         $validated = $request->validate([
@@ -75,7 +78,7 @@ class ProdukController extends Controller
             }
             $validated['gambar'] = $request->file('gambar')->store('produk', 'public');
         } else {
-            $validated['gambar'] = $produk->gambar; // pertahankan gambar lama
+            $validated['gambar'] = $produk->gambar; 
         }
 
         $produk->update($validated);
@@ -83,7 +86,7 @@ class ProdukController extends Controller
         return redirect()->route('produk.index')->with('success', 'Produk berhasil diperbarui!');
     }
 
-    // Hapus produk
+   
     public function destroy(Produk $produk)
     {
         if ($produk->gambar) {
@@ -94,7 +97,9 @@ class ProdukController extends Controller
         return redirect()->route('produk.index')->with('success', 'Produk berhasil dihapus!');
     }
 
-    // Tampilkan detail produk (opsional)
+    
+
+    
     public function show(Produk $produk)
     {
         return view('produk.show', compact('produk'));

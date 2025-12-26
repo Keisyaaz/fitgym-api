@@ -9,14 +9,14 @@ class RoleMiddleware
 {
     public function handle(Request $request, Closure $next, $role)
     {
-        // Cek apakah user sudah login
+       
         if (!auth()->check()) {
-            return redirect('/login'); // Arahkan ke login
+            return redirect('/login'); 
         }
 
-        // Cek apakah role user sesuai
+        
         if (auth()->user()->role !== $role) {
-            abort(403, 'Tidak diizinkan'); // Forbidden
+            abort(403, 'Tidak diizinkan'); 
         }
 
         return $next($request);

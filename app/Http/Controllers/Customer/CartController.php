@@ -8,18 +8,13 @@ use App\Models\Produk;
 
 class CartController extends Controller
 {
-    // ------------------------
-    // INDEX: Tampilkan Keranjang
-    // ------------------------
+    
     public function index()
     {
         $cart = session()->get('cart', []);
         return view('customer.produk.cart.index', compact('cart'));
     }
 
-    // ------------------------
-    // STORE: Tambah Produk ke Keranjang
-    // ------------------------
     public function store($produkId)
     {
         $product = Produk::findOrFail($produkId);
@@ -27,10 +22,8 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
 
         if (isset($cart[$produkId])) {
-            // Jika sudah ada, tambahkan jumlahnya
             $cart[$produkId]['jumlah']++;
         } else {
-            // Jika belum ada, tambahkan item baru
             $cart[$produkId] = [
                 "id" => $product->id,
                 "nama" => $product->Nama_produk,
@@ -42,14 +35,12 @@ class CartController extends Controller
 
         session()->put('cart', $cart);
 
-        // Arahkan ke halaman keranjang
+       
         return redirect()->route('cart.index')
             ->with('success', 'Produk berhasil ditambahkan ke keranjang!');
     }
 
-    // ------------------------
-    // UPDATE: Ubah jumlah item
-    // ------------------------
+  
     public function update(Request $request, $id)
     {
         $cart = session()->get('cart', []);
@@ -63,9 +54,7 @@ class CartController extends Controller
             ->with('success', 'Keranjang berhasil diperbarui!');
     }
 
-    // ------------------------
-    // DESTROY: Hapus item dari keranjang
-    // ------------------------
+    
     public function destroy($id)
     {
         $cart = session()->get('cart', []);

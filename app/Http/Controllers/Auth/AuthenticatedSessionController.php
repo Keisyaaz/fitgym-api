@@ -29,11 +29,11 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user();
 
-        // Redirect berdasarkan role (case-insensitive)
+      
         if (strtolower($user->role) === 'admin') {
-            return redirect()->route('produk.index'); // admin ke dashboard
+            return redirect()->route('produk.index'); 
         } else {
-            return redirect()->route('customer.produk'); // customer ke halaman produk
+            return redirect()->route('customer.produk'); 
         }
     }
 
@@ -47,6 +47,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login'); // setelah logout ke halaman login custom
+        return redirect()->route('login'); 
     }
 }
