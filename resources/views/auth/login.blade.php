@@ -3,30 +3,56 @@
 @section('title', 'Login FitGym')
 
 @section('content')
-<div class="login-container">
-    <h2 class="text-center mb-4">Login FitGym</h2>
+<div class="register-wrapper">
+    <div class="register-container">
+        <h2 class="text-center mb-4 text-white">Login FitGym</h2>
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
 
-        <div class="mb-3">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus class="form-control">
-            @error('email') <div class="text-danger">{{ $message }}</div> @enderror
-        </div>
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    placeholder="Email Address"
+                    value="{{ old('email') }}"
+                    required
+                    autofocus
+                >
+            </div>
+            @error('email')
+                <div class="text-danger mb-2">{{ $message }}</div>
+            @enderror
 
-        <div class="mb-3">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" required class="form-control">
-            @error('password') <div class="text-danger">{{ $message }}</div> @enderror
-        </div>
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="fas fa-lock"></i>
+                </span>
+                <input
+                    type="password"
+                    name="password"
+                    class="form-control"
+                    placeholder="Password"
+                    required
+                >
+            </div>
+            @error('password')
+                <div class="text-danger mb-2">{{ $message }}</div>
+            @enderror
 
-        <div class="mb-3 form-check">
-            <input type="checkbox" name="remember" id="remember" class="form-check-input">
-            <label for="remember" class="form-check-label">Remember me</label>
-        </div>
+            <button type="submit" class="btn btn-register">LOGIN</button>
 
-        <button type="submit" class="btn btn-primary w-100">Login</button>
-    </form>
+            <div class="options d-flex justify-content-between mt-3 text-white">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="remember" id="remember">
+                    <label class="form-check-label" for="remember">Remember me</label>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 @endsection
