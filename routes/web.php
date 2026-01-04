@@ -1,30 +1,26 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProdukController; // Admin ProdukController
-use App\Http\Controllers\Customer\ProdukController as CustomerProdukController; 
+use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\Customer\ProdukController as CustomerProdukController;
 use App\Http\Controllers\Customer\CartController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::get('/dashboard', function () {
     return redirect()->route('produk.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
-
-
+// ADMIN
 Route::middleware('auth')->group(function () {
     Route::resource('produk', ProdukController::class);
 });
 
-
+// CUSTOMER PRODUK
 Route::middleware('auth')->group(function () {
     Route::get('/customer/produk', function () {
         $user = Auth::user();
@@ -35,29 +31,18 @@ Route::middleware('auth')->group(function () {
     })->name('customer.produk');
 });
 
-
+// CART
 Route::middleware('auth')->group(function () {
-
-   
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-
-   
     Route::post('/cart/{produkId}', [CartController::class, 'store'])->name('cart.store');
-
-    
     Route::patch('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
-
-    
     Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
 });
 
-
+// LOGOUT (WEB)
 Route::post('/logout', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
 
+// AUTH ROUTES (LOGIN, REGISTER, VERIFY, DLL)
 require __DIR__.'/auth.php';
-
-Route::get('/login', [AuthenticatedSessionController::class, 'create'])
-    ->middleware('guest')
-    ->name('login');

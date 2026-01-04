@@ -6,25 +6,17 @@ use App\Http\Controllers\Api\CartApiController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
 
-// ==========================================
-// 1. PUBLIC ROUTES (BEBAS DIAKSES FLUTTER)
-// ==========================================
 
-// AUTH
+
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// PRODUK (PUBLIC – UNTUK FLUTTER)
 Route::get('/produk', [ProdukApiController::class, 'index']);
 Route::post('/produk', [ProdukApiController::class, 'store']);
 Route::put('/produk/{id}', [ProdukApiController::class, 'update']);
 Route::delete('/produk/{id}', [ProdukApiController::class, 'destroy']);
 
-// ==========================================
-// 🔥 ROUTE KHUSUS GAMBAR (ANTI CORS FLUTTER WEB)
-// ==========================================
-// CONTOH AKSES:
-// http://127.0.0.1:8000/api/image/produk/default.jpg
 
 Route::get('/image/{path}', function ($path) {
     $fullPath = storage_path('app/public/' . $path);
@@ -41,7 +33,7 @@ Route::get('/image/{path}', function ($path) {
 })->where('path', '.*');
 
 // ==========================================
-// 2. PROTECTED ROUTES (WAJIB LOGIN)
+// 2. PROTECTED ROUTES 
 // ==========================================
 Route::middleware('auth:sanctum')->group(function () {
 
