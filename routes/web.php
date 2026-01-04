@@ -57,3 +57,7 @@ Route::post('/logout', [App\Http\Controllers\Auth\AuthenticatedSessionController
     ->name('logout');
 
 require __DIR__.'/auth.php';
+
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])
+    ->middleware('guest')
+    ->name('login');

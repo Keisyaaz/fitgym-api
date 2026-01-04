@@ -35,7 +35,7 @@
                 
                 <div class="position-relative overflow-hidden">
                     @if($p->gambar)
-                        <img src="{{ asset('storage/' . $p->gambar) }}" class="card-img-top" alt="{{ $p->Nama_produk }}">
+                        <img src="{{ asset($produk->gambar) }}" class="card-img-top" alt="{{ $p->Nama_produk }}">
                     @else
                         <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
                             <i class="fas fa-image fa-3x text-secondary"></i>

@@ -3,65 +3,19 @@
 @section('title', 'Daftar Produk')
 
 @section('content')
-
 <style>
-    .container-table {
-        max-width: 1400px; /* Lebar lebih besar */
-        margin: 20px auto;
-        background: #fff;
-        padding: 25px 40px; /* Sedikit lebih luas */
-        border-radius: 10px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-        text-align: center;
-        margin-bottom: 25px;
-        color: #333;
-    }
-
-    .btn {
-        padding: 8px 15px;
-        border-radius: 6px;
-        text-decoration: none;
-        font-weight: bold;
-        margin-bottom: 15px;
-        display: inline-block;
-    }
-
-    .btn-primary { background: #007bff; color: #fff; }
-    .btn-warning { background: #ffc107; color: #fff; }
-    .btn-danger { background: #dc3545; color: #fff; }
-
-    .btn:hover { opacity: 0.8; }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        table-layout: fixed; /* Kolom lebih rapi */
-    }
-
-    th, td {
-        padding: 12px; /* Lebih lega */
-        border: 1px solid #ddd;
-        text-align: center;
-        font-size: 14px;
-        word-wrap: break-word;
-    }
-
-    th { background: #f2f2f2; }
-
-    img {
-        max-width: 100px; /* Lebih besar */
-        border-radius: 6px;
-    }
-
-    form.d-inline { display: inline-block; }
+    .container-table { max-width: 1400px; margin: 20px auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    h2 { text-align: center; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 12px; border: 1px solid #ddd; text-align: center; }
+    th { background: #f4f4f4; }
+    .btn { padding: 5px 10px; border-radius: 4px; text-decoration: none; color: white; display: inline-block; margin: 2px; }
+    .btn-primary { background: blue; } .btn-warning { background: orange; } .btn-danger { background: red; }
 </style>
+
 <div class="container-table">
     <h2>Daftar Produk</h2>
-
-    <a href="{{ route('produk.create') }}" class="btn btn-primary">Tambah Produk</a>
+    <a href="{{ route('produk.create') }}" class="btn btn-primary" style="margin-bottom: 15px;">Tambah Produk</a>
 
     <table>
         <thead>
@@ -82,18 +36,22 @@
                     <td>{{ $item->Deskripsi_produk }}</td>
                     <td>{{ $item->Kategori_produk }}</td>
                     <td>{{ $item->Varian_produk }}</td>
-                    <td>{{ $item->Harga }}</td>
+                    <td>Rp {{ number_format($item->Harga, 0, ',', '.') }}</td>
                     <td>
                         @if($item->gambar)
-                            <img src="{{ asset('storage/'.$item->gambar) }}" alt="Gambar Produk">
+                            {{-- PENTING: Panggil via folder STORAGE --}}
+                            <img src="{{ asset($produk->gambar) }}"
+ 
+                                 alt="Produk" width="80" height="80" style="object-fit: cover; border-radius: 5px;">
+                        @else
+                            <span style="color:red; font-size: 12px;">No Image</span>
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('produk.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('produk.destroy', $item->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger btn-sm">Hapus</button>
+                        <a href="{{ route('produk.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+                        <form action="{{ route('produk.destroy', $item->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Hapus?')">
+                            @csrf @method('DELETE')
+                            <button class="btn btn-danger">Hapus</button>
                         </form>
                     </td>
                 </tr>
@@ -101,5 +59,4 @@
         </tbody>
     </table>
 </div>
-
 @endsection
