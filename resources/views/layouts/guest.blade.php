@@ -8,12 +8,134 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    {{-- CSS kamu --}}
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <style>
+       /* --- Global Styles --- */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    /* Background Gradient */
+    background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+    background-size: 200% 200%;
+    animation: gradientBG 15s ease infinite;
+    min-height: 100vh;
+    margin: 0;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* --- Container & Layout --- */
+.register-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.register-container {
+    /* Efek Glassmorphism (Kaca) */
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 40px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 450px;
+    color: #555;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+/* --- Header Text --- */
+.header-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header-title h2 {
+    font-weight: 600;
+}
+
+/* --- Form Inputs --- */
+.input-group {
+    margin-bottom: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.input-group-text {
+    background: white;
+    border: none;
+    color: #2d7a92; /* Warna Teal */
+    padding-left: 15px;
+    width: 45px;
+    justify-content: center;
+}
+
+.form-control {
+    border: none;
+    height: 50px;
+    padding-left: 10px;
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+/* --- Buttons --- */
+.btn-register {
+    background-color: #2d7a92;
+    border: none;
+    color: white;
+    width: 100%;
+    height: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: 0.3s;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.btn-register:hover {
+    background-color: #246073;
+    transform: translateY(-2px);
+}
+
+/* --- Links & Footer --- */
+.footer-link {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 14px;
+    color: white;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    padding-top: 15px;
+}
+
+.footer-link a {
+    color: #fff;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+/* --- Alerts --- */
+.alert-danger {
+    background-color: rgba(220, 53, 69, 0.9);
+    border: none;
+    color: white;
+    font-size: 13px;
+    border-radius: 10px;
+}
+    </style>
 </head>
 <body>
 
-    {{-- ⬇️ PENTING: TEMPAT KONTEN --}}
     @yield('content')
 
 </body>
